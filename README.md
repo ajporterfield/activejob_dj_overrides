@@ -1,8 +1,6 @@
-# ActivejobDjOverrides
+# Per-job Overrides for Active Job's DelayedJobAdapter
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/activejob_dj_overrides`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Delayed Job allows you to override various settings on a per-job basis (see https://github.com/collectiveidea/delayed_job#custom-jobs).  I really missed this feature when I switched to using Active Job, so I wrote this gem, which allows max_attempts, destroy_failed_jobs?, and max_run_time to be defined within your (active) job - just like Delayed Job.  See Usage section below for an example.
 
 ## Installation
 
@@ -22,26 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-Delayed Job allows you to override various settings on a per-job basis (see https://github.com/collectiveidea/delayed_job#custom-jobs).  I really missed this feature when I switched to using Active Job.  So, I wrote this gem, which allows max_attempts, destroy_failed_jobs?, and max_run_time to be defined within your (active) job - just like Delayed Job.
-
 ```ruby
 class YourJob < ActiveJob::Base
   queue_as :default
 
   def perform(*args)
     # Do something later
+    # sleep 1.minute # tests max_run_time
+    # nil > 0 # tests max_attempts and destroy_failed_jobs?
   end
 
   def max_attempts
-    2
+    1 # default is 25
   end
 
   def destroy_failed_jobs?
-    false
+    false # default is true
   end
 
   def max_run_time
-    5
+    5 # default is 4.hours
   end
 end
 ```
