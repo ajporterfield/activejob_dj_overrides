@@ -17,7 +17,6 @@ module ActivejobDjOverrides
 
   private
     def job
-      puts 'job'
       @job ||= ActiveJob::Base.deserialize(job_data)
     end
 end
