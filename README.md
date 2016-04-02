@@ -22,7 +22,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Delayed Job allows you to override various settings on a per-job basis (see https://github.com/collectiveidea/delayed_job#custom-jobs).  I really missed this feature when I switched to using Active Job.  So, I wrote this gem, which allows max_attempts, destroy_failed_jobs?, and max_run_time to be defined within your (active) job - just like Delayed Job.
+
+```ruby
+class YourJob < ActiveJob::Base
+  queue_as :default
+
+  def perform(*args)
+    # Do something later
+  end
+
+  def max_attempts
+    2
+  end
+
+  def destroy_failed_jobs?
+    false
+  end
+
+  def max_run_time
+    5
+  end
+end
+```
 
 ## Development
 
