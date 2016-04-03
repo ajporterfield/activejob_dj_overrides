@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ajporterfield@gmail.com"]
 
   spec.summary       = 'Adds per-job overrides to the delayed_job adapter for Active Job'
-  spec.description   = 'Allows max_attempts, destroy_failed_jobs?, and max_run_time methods to be defined in your jobs to override default settings just like you\'re used to in delayed_job'
+  spec.description   = 'Allows max_attempts, destroy_failed_jobs?, reschedule_at, and max_run_time methods to be defined in your jobs to override default settings just like you\'re used to in delayed_job'
   spec.homepage      = 'https://github.com/ajporterfield/activejob_dj_overrides'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

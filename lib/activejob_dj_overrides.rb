@@ -15,6 +15,10 @@ module ActivejobDjOverrides
     job.max_run_time rescue Delayed::Worker.max_run_time
   end
 
+  def reschedule_at(current_time, attempts)
+    job.reschedule_at(current_time, attempts) rescue (current_time + (attempts**4) + 5)
+  end
+
   private
     def job
       @job ||= ActiveJob::Base.deserialize(job_data)

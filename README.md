@@ -1,6 +1,6 @@
 # Per-job Overrides for Active Job's DelayedJobAdapter
 
-Delayed Job allows you to override various settings on a per-job basis (see https://github.com/collectiveidea/delayed_job#custom-jobs).  I really missed this feature when I switched to using Active Job, so I wrote this gem, which allows max_attempts, destroy_failed_jobs?, and max_run_time to be defined within your (active) job - just like Delayed Job.  See Usage section below for an example.
+Delayed Job allows you to override various settings on a per-job basis (see https://github.com/collectiveidea/delayed_job#custom-jobs).  I really missed this feature when I switched to using Active Job, so I wrote this gem, which allows max_attempts, destroy_failed_jobs?, reschedule_at, and max_run_time to be defined within your (active) job - just like Delayed Job.  See Usage section below for an example.
 
 ## Installation
 
@@ -40,6 +40,10 @@ class YourJob < ActiveJob::Base
 
   def max_run_time
     5 # default is 4.hours
+  end
+
+  def reschedule_at(current_time, attempts)
+    current_time + 5.seconds # default is current_time + (attempts**4) + 5
   end
 end
 ```
