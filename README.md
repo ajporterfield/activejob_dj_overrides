@@ -45,6 +45,10 @@ class YourJob < ActiveJob::Base
   def reschedule_at(current_time, attempts)
     current_time + 5.seconds # default is current_time + (attempts**4) + 5
   end
+
+  def failure(job)
+    # notify someone that this task has reached its max_attempts
+  end
 end
 ```
 

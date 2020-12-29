@@ -19,6 +19,10 @@ module ActivejobDjOverrides
     job.reschedule_at(current_time, attempts) rescue (current_time + (attempts**4) + 5)
   end
 
+  def failure
+    job.failure(job) rescue nil
+  end
+
   private
     def job
       @job ||= ActiveJob::Base.deserialize(job_data)
